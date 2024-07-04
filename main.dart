@@ -30,62 +30,262 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  int _result = 0;
-  final int _valor1 = 0;
-  final int _valor2 = 0;
+TextEditingController _textEditingController = TextEditingController();
 
-  void _somarValores() {
-    setState(() {
+class _MyHomePageState extends State<MyHomePage> {
+  double _result = 0;
+  double _valor1 = 0;
+  double _valor2 = 0;
+  String _salvecria = '0';
+  String _operacao = '';
+
+  double qualOp(String _op) {
+    if (_op == '+') {
       _result = _valor1 + _valor2;
-    });
+      return _result;
+    }
+    if (_op == '-') {
+      _result = _valor1 - _valor2;
+      return _result;
+    }
+    if (_op == '*') {
+      _result = _valor1 * _valor2;
+      return _result;
+    }
+    if (_op == '/') {
+      _result = _valor1 / _valor2;
+      return _result;
+    }
+    return -1;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora'),
+        title: const Text('Calculadora'),
       ),
       body: Center(
           child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
-            key: Key('result'),
-            decoration: InputDecoration(labelText: '0'),
-            textAlign: TextAlign.right,
-            textDirection: TextDirection.rtl,
+          TextField(
+            controller: _textEditingController,
+            key: const Key('result'),
+            decoration: InputDecoration(labelText: _salvecria),
+            readOnly: true,
+            enableInteractiveSelection: false,
           ),
           Row(children: [
-            ElevatedButton(onPressed: () {}, child: const Text('CE')),
-            ElevatedButton(onPressed: () {}, child: const Text('C')),
-            ElevatedButton(onPressed: () {}, child: const Text('+/-')),
-            ElevatedButton(onPressed: () {}, child: const Text('/')),
-          ]),
-          Row(children: [
-            ElevatedButton(onPressed: () {}, child: const Text('7')),
-            ElevatedButton(onPressed: () {}, child: const Text('8')),
-            ElevatedButton(onPressed: () {}, child: const Text('9')),
-            ElevatedButton(onPressed: () {}, child: const Text('X')),
-          ]),
-          Row(children: [
-            ElevatedButton(onPressed: () {}, child: const Text('4')),
-            ElevatedButton(onPressed: () {}, child: const Text('5')),
-            ElevatedButton(onPressed: () {}, child: const Text('6')),
-            ElevatedButton(onPressed: () {}, child: const Text('-')),
-          ]),
-          Row(children: [
-            ElevatedButton(onPressed: () {}, child: const Text('1')),
-            ElevatedButton(onPressed: () {}, child: const Text('2')),
-            ElevatedButton(onPressed: () {}, child: const Text('3')),
-            ElevatedButton(onPressed: () {}, child: const Text('+')),
-          ]),
-          Row(children: [
-            ElevatedButton(onPressed: () {}, child: const Text('0')),
             ElevatedButton(
                 onPressed: () {
-                  _somarValores() {}
+                  setState(() {
+                    _salvecria = '0';
+                    _valor1 = 0;
+                    _valor2 = 0;
+                    _operacao = '';
+                  });
+                },
+                child: const Text('CE')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _salvecria = '0';
+                    _valor1 = 0;
+                    _valor2 = 0;
+                    _operacao = '';
+                  });
+                },
+                child: const Text('C')),
+            ElevatedButton(onPressed: () {}, child: const Text('+/-')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _valor1 = _valor2;
+                    _valor2 = 0;
+                    _salvecria = '0';
+                    _operacao = '/';
+                  });
+                },
+                child: const Text('/')),
+          ]),
+          Row(children: [
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '7';
+                    } else {
+                      _salvecria = _salvecria + '7';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('7')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '8';
+                    } else {
+                      _salvecria = _salvecria + '8';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('8')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '9';
+                    } else {
+                      _salvecria = _salvecria + '9';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('9')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _valor1 = _valor2;
+                    _valor2 = 0;
+                    _salvecria = '0';
+                    _operacao = '*';
+                  });
+                },
+                child: const Text('*')),
+          ]),
+          Row(children: [
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '4';
+                    } else {
+                      _salvecria = _salvecria + '4';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('4')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '5';
+                    } else {
+                      _salvecria = _salvecria + '5';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('5')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '6';
+                    } else {
+                      _salvecria = _salvecria + '6';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('6')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _valor1 = _valor2;
+                    _valor2 = 0;
+                    _salvecria = '0';
+                    _operacao = '-';
+                  });
+                },
+                child: const Text('-')),
+          ]),
+          Row(children: [
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '1';
+                    } else {
+                      _salvecria = _salvecria + '1';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('1')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '2';
+                    } else {
+                      _salvecria = _salvecria + '2';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('2')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '3';
+                    } else {
+                      _salvecria = _salvecria + '3';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('3')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _valor1 = _valor2;
+                    _valor2 = 0;
+                    _salvecria = '0';
+                    _operacao = '+';
+                  });
+                },
+                child: const Text('+')),
+          ]),
+          Row(children: [
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                    } else {
+                      _salvecria = _salvecria + '0';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('0')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_salvecria == '0') {
+                      _salvecria = '0.';
+                    } else {
+                      _salvecria = _salvecria + '.';
+                    }
+                  });
+                  _valor2 = double.parse(_salvecria);
+                },
+                child: const Text('.')),
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_valor2 == 0 && _operacao == '/') {
+                    } else {
+                      _salvecria = qualOp(_operacao).toString();
+                      _valor2 = qualOp(_operacao);
+                    }
+                  });
                 },
                 child: const Text('=')),
           ]),
